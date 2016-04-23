@@ -3,7 +3,9 @@ package com.performance.ua.performancelab;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Trace;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.webkit.WebView;
 import android.widget.TextView;
@@ -29,6 +31,7 @@ public class FibActivity extends AppCompatActivity {
         findViewById(R.id.fib_progress).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Trace.beginSection("compute fib");
                 textView.setText(String.valueOf(computeFibonacci(POSITION_IN_FIB_SEQUENCE)));
             }
         });
@@ -39,7 +42,11 @@ public class FibActivity extends AppCompatActivity {
     }
 
     public int computeFibonacci(int positionInFibSequence) {
-        //Log.i(TAG, "inside fib" + positionInFibSequence);
+        Trace.endSection();
+        Trace.beginSection("compute fib");
+        Trace.beginSection("log");
+        Log.i(TAG, "inside fib" + positionInFibSequence);
+        Trace.endSection();
         if (positionInFibSequence <= 2) {
             return 1;
         } else {
